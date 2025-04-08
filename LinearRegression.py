@@ -21,8 +21,8 @@ X = np.concatenate((col1, x), axis=1)
 w = np.array([[1],[2],[3],[4],[5],[6],[7]])
 
 #ham loss
-def MSE( y_pre, y_real):
-    return((y_real - y_pre)**2/2)
+def MSE(w):
+    return 0.5 * np.mean((y - X.dot(w))**2)
 
 #Tinh dao ham ham loss
 def Gradient (w):
@@ -33,9 +33,17 @@ def Gradient (w):
 def gradientDescent(w, LR):
     for i in range(100000):
         tmp_w = w - LR*Gradient(w)
+        if MSE(tmp_w) < e :
+            return tmp_w
         w = tmp_w
     return w
 
+#Tim w
+e = 1e-4
 LR = 0.01
 w = gradientDescent(w,LR)
 print("Trong so w sau khi toi uu la: w = \n",w)
+
+#Du doan
+x_new = np.array([[1],[112],[3.6],[10],[3],[456.4],[234]])
+print("y du doan se la: y_predict = ",x_new.T.dot(w))
